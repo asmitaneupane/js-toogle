@@ -6,9 +6,11 @@
 	<title>JS Toggle</title>
 
 	<style>
-	
+		.not-show{
+			display: none;
+		}
 	</style>
-	
+
 </head>
 <body>
 <section class="toggle-items-wrapper" >
@@ -67,7 +69,50 @@
 <script type="text/javascript">	
 
 	jQuery(document).ready(function($){
-	  console.log('test');
+	      ////show more and less 
+
+	    var showChar = 200; 
+	    var signaltext = "......";
+	    var moretext = "learn More";
+	    var lesstext = "learn Less";
+
+	    $('.loan-detail p').each(function(){
+	         var content = $(this).html();        
+
+	            if(content.length > showChar) {
+	         
+	                var initial_text = content.substr(0, showChar);
+	                var final_text = content.substr(showChar, content.length - showChar);
+
+	                var html = initial_text + '<span class="moreellipses">' + signaltext+ 
+	                '&nbsp;</span><span class="morecontent"><span>' + final_text + 
+	                '</span>&nbsp;&nbsp;<div class="morelink-wrap"><a href="" class="morelink">'
+	                 + moretext + '</a></div></span>';
+	         
+	                $(this).html(html);
+
+	                $('.morecontent span').addClass('not-show');
+	            }
+	    });
+
+	    $(".morelink").click(function(){
+	                
+	        $(this).parent().prev().toggle();
+	        $(this).prev().toggle();
+
+	        if($(this).hasClass("less")) {
+	            $(this).removeClass("less");
+	            $(this).html(moretext);
+	            var moreOffset = $('.moreellipses').offset().top;
+	            $('html, body').animate({
+	                scrollTop: moreOffset - 300,
+	            }, 500 );
+	        } else {
+	            $(this).addClass("less");
+	            $(this).html(lesstext);
+	        }
+	        return false;
+	    });
 	});
 </script>
 </body>
